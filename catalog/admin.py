@@ -8,6 +8,7 @@ from catalog.models import Author, Genre, Book, BookInstance, Language
 admin.site.register(Genre)
 # admin.site.register(BookInstance)
 admin.site.register(Language)
+
 class BooksInline(admin.TabularInline):
     model = Book
     extra = 0
