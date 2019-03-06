@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from catalog.models import Book, Author, BookInstance, Genre
+from django.views import generic
 
 # Create your views here.
-from catalog.models import Book, Author, BookInstance, Genre
+
 
 def index(request):
     """View function for home page of site."""
@@ -10,9 +12,9 @@ def index(request):
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
     
-    # generate counts for genres and books that contain a particular word (case insensitive)
+    # generate counts for genres and books that contain a particular word (case insensitive) From Part 5 Challenge
     books_filter_count = Book.objects.filter(title__icontains='Parable').count()
-    genre_filter_count = Genre.objects.filter(name__icontains='Race').count()
+    genre_filter_count = Genre.objects.filter(name__icontains='').count()
   
     # Available books (status = 'a')
     num_instances_available = BookInstance.objects.filter(status__exact='a').count()
@@ -31,3 +33,19 @@ def index(request):
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
+
+    from django.views import generic
+
+class BookListView(generic.ListView):
+    model = Book
+    paginate_by = 10
+
+class BookDetailView(generic.DetailView):
+    model = Book
+
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by = 10
+
+class AuthorDetailView(generic.DetailView):
+    model = Author        
